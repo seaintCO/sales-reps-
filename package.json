@@ -1,0 +1,8 @@
+{
+  "name": "seaint-ai-demo-builder",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}
