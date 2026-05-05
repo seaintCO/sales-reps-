@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SEAINT Demo Builder</title>
+  <title>SEAINT AI Demo Builder</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
   <style>
     body { background:#030303; color:white; font-family: Inter, system-ui, sans-serif; }
     .glass { background:rgba(20,20,24,.72); border:1px solid rgba(255,255,255,.08); backdrop-filter: blur(18px); }
@@ -20,7 +21,6 @@
 </head>
 
 <body class="min-h-screen grid-bg overflow-x-hidden">
-
   <div class="fixed inset-0 pointer-events-none">
     <div class="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-600/20 blur-[150px] rounded-full"></div>
     <div class="absolute bottom-[-10%] right-[10%] w-[500px] h-[500px] bg-violet-600/20 blur-[150px] rounded-full"></div>
@@ -32,15 +32,9 @@
         <iconify-icon icon="solar:magic-stick-3-linear"></iconify-icon>
       </div>
       <div>
-        <h1 class="font-semibold tracking-tight">SEAINT Demo Builder</h1>
-        <p class="text-xs text-zinc-500">Static HTML Website Generator</p>
+        <h1 class="font-semibold tracking-tight">SEAINT AI Demo Builder</h1>
+        <p class="text-xs text-zinc-500">Prompt-to-HTML website generator</p>
       </div>
-    </div>
-
-    <div class="hidden md:flex items-center gap-6 text-xs text-zinc-400">
-      <span>Templates</span>
-      <span>Components</span>
-      <span>Export</span>
     </div>
 
     <button onclick="downloadHTML()" class="bg-white text-black text-sm px-4 py-2 rounded-lg font-semibold hover:bg-zinc-200">
@@ -48,269 +42,145 @@
     </button>
   </header>
 
-  <main class="relative z-10 grid lg:grid-cols-[420px_1fr] gap-6 p-6">
+  <main class="relative z-10 grid lg:grid-cols-[430px_1fr] gap-6 p-6">
 
-    <!-- BUILDER PANEL -->
     <section class="glass rounded-2xl p-5 h-fit sticky top-24">
       <div class="mb-5">
-        <h2 class="text-xl font-semibold tracking-tight">Generate Client Demo</h2>
-        <p class="text-sm text-zinc-400 mt-1">Fill this out and instantly create a premium static website.</p>
+        <h2 class="text-xl font-semibold tracking-tight">Generate Real Website Code</h2>
+        <p class="text-sm text-zinc-400 mt-1">Type what the client needs. AI returns a unique static HTML website.</p>
       </div>
 
       <div class="space-y-4">
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">Business Name</label>
-          <input id="businessName" value="Elite Spine & Wellness" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm" />
-        </div>
+        <textarea id="prompt" rows="9" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm resize-none" placeholder="Example: Create a luxury futuristic website for a chiropractor in Murfreesboro. Include hero, services, testimonials, AI receptionist section, booking CTA, and premium dark design."></textarea>
 
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">Industry</label>
-          <select id="industry" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm">
-            <option>Chiropractor</option>
-            <option>Contractor</option>
-            <option>Med Spa</option>
-            <option>Real Estate</option>
-            <option>Restaurant</option>
-            <option>Fitness</option>
-            <option>AI SaaS</option>
-            <option>Law Firm</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">City</label>
-          <input id="city" value="Nashville, TN" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm" />
-        </div>
-
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">Services</label>
-          <textarea id="services" rows="3" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm">Back Pain Relief, Neuropathy Care, Posture Correction</textarea>
-        </div>
-
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">Brand Tone</label>
-          <select id="tone" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm">
-            <option>Luxury</option>
-            <option>Modern</option>
-            <option>Medical</option>
-            <option>Bold</option>
-            <option>Clean</option>
-            <option>Futuristic</option>
-          </select>
-        </div>
-
-        <div>
-          <label class="text-xs text-zinc-500 uppercase tracking-widest">CTA Button</label>
-          <input id="cta" value="Book Appointment" class="mt-2 w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm" />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 pt-2">
-          <button onclick="generateSite()" class="bg-white text-black rounded-xl py-3 text-sm font-semibold hover:bg-zinc-200">
-            Generate Demo
+        <div class="grid grid-cols-2 gap-3">
+          <button onclick="generateAIWebsite()" id="generateBtn" class="bg-white text-black rounded-xl py-3 text-sm font-semibold hover:bg-zinc-200">
+            Generate
           </button>
+
           <button onclick="copyHTML()" class="bg-zinc-900 border border-white/10 rounded-xl py-3 text-sm font-semibold hover:bg-zinc-800">
             Copy HTML
           </button>
         </div>
 
+        <button onclick="fillExample()" class="w-full bg-blue-500/10 border border-blue-400/20 text-blue-200 rounded-xl py-3 text-sm font-semibold hover:bg-blue-500/20">
+          Use Example Prompt
+        </button>
+
         <p id="status" class="text-xs text-zinc-500 pt-2"></p>
       </div>
     </section>
 
-    <!-- PREVIEW PANEL -->
-    <section class="glass rounded-2xl overflow-hidden min-h-[800px]">
+    <section class="glass rounded-2xl overflow-hidden min-h-[850px]">
       <div class="h-12 border-b border-white/10 bg-black/50 flex items-center justify-between px-4">
         <div class="flex items-center gap-2">
           <span class="w-3 h-3 rounded-full bg-red-500/70"></span>
           <span class="w-3 h-3 rounded-full bg-yellow-500/70"></span>
           <span class="w-3 h-3 rounded-full bg-green-500/70"></span>
         </div>
-        <p class="text-xs text-zinc-500">Live Website Preview</p>
+        <p class="text-xs text-zinc-500">Live Preview</p>
       </div>
 
-      <iframe id="preview" class="w-full h-[850px] bg-black"></iframe>
+      <iframe id="preview" class="w-full h-[900px] bg-black"></iframe>
     </section>
   </main>
 
 <script>
 let generatedHTML = "";
 
-function val(id){
-  return document.getElementById(id).value.trim();
+function fillExample(){
+  document.getElementById("prompt").value =
+`Create a luxury futuristic website for a chiropractor in Murfreesboro called Elite Spine & Wellness.
+
+Style:
+- Dark obsidian background
+- Blue/violet glow
+- Premium medical authority
+- Glassmorphism cards
+- High-end spacing and typography
+
+Sections:
+- Hero with strong CTA
+- Services for back pain, neuropathy, posture correction
+- Doctor credibility section
+- AI receptionist section
+- Testimonials
+- Booking CTA
+- Footer
+
+Make it feel different from a normal template.`;
 }
 
-function escapeHTML(str){
-  return String(str || "").replace(/[&<>"']/g, m => ({
-    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
-  }[m]));
-}
+async function generateAIWebsite(){
+  const prompt = document.getElementById("prompt").value.trim();
+  const status = document.getElementById("status");
+  const btn = document.getElementById("generateBtn");
 
-function generateSite(){
-  const business = escapeHTML(val("businessName"));
-  const industry = escapeHTML(val("industry"));
-  const city = escapeHTML(val("city"));
-  const tone = escapeHTML(val("tone"));
-  const cta = escapeHTML(val("cta"));
+  if(!prompt){
+    status.innerText = "Add a prompt first.";
+    return;
+  }
 
-  const services = val("services")
-    .split(",")
-    .map(s => s.trim())
-    .filter(Boolean);
+  btn.disabled = true;
+  btn.innerText = "Generating...";
+  status.innerText = "Generating website code...";
 
-  const serviceCards = services.map(service => `
-    <div class="glass rounded-2xl p-6 hover:-translate-y-1 transition duration-300">
-      <div class="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-400/20 flex items-center justify-center mb-5">
-        ✦
-      </div>
-      <h3 class="text-xl font-semibold">${escapeHTML(service)}</h3>
-      <p class="text-zinc-400 mt-3 text-sm leading-relaxed">
-        Premium ${escapeHTML(industry.toLowerCase())} solutions designed for better outcomes, stronger trust, and a smoother client experience.
-      </p>
-    </div>
-  `).join("");
+  try {
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ prompt })
+    });
 
-  generatedHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${business}</title>
-  <script src="https://cdn.tailwindcss.com"><\/script>
-  <style>
-    body { background:#030303; color:white; font-family: Inter, system-ui, sans-serif; }
-    .glass { background:rgba(20,20,24,.68); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(16px); }
-    .grid-bg {
-      background-image:
-      linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 90px 90px;
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error(data.error || "Generation failed");
     }
-  </style>
-</head>
-<body class="grid-bg overflow-x-hidden">
 
-  <div class="fixed inset-0 pointer-events-none">
-    <div class="absolute top-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-600/20 blur-[160px] rounded-full"></div>
-    <div class="absolute bottom-[-10%] right-[10%] w-[600px] h-[600px] bg-violet-600/20 blur-[160px] rounded-full"></div>
-  </div>
+    generatedHTML = data.html;
+    document.getElementById("preview").srcdoc = generatedHTML;
+    status.innerText = "Website generated successfully.";
 
-  <nav class="relative z-10 h-20 flex items-center justify-between px-6 md:px-12 border-b border-white/10 bg-black/50 backdrop-blur-xl">
-    <div class="font-semibold tracking-tight">${business}</div>
-    <div class="hidden md:flex gap-8 text-sm text-zinc-400">
-      <a href="#services">Services</a>
-      <a href="#ai">AI Agent</a>
-      <a href="#contact">Contact</a>
-    </div>
-    <a href="#contact" class="bg-white text-black px-5 py-2 rounded-full text-sm font-semibold">${cta}</a>
-  </nav>
-
-  <section class="relative z-10 min-h-[720px] flex items-center px-6 md:px-12">
-    <div class="max-w-4xl">
-      <div class="inline-flex items-center gap-2 text-xs text-blue-300 bg-blue-500/10 border border-blue-400/20 rounded-full px-4 py-2 mb-8">
-        <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-        ${tone} ${industry} Experience • ${city}
-      </div>
-
-      <h1 class="text-5xl md:text-7xl font-semibold tracking-tighter leading-[1.02]">
-        Modern ${industry} Website for 
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-violet-300 to-white">${business}</span>
-      </h1>
-
-      <p class="text-zinc-400 text-lg md:text-xl mt-8 max-w-2xl leading-relaxed">
-        A premium digital experience built to increase trust, capture leads, showcase services, and make your business look like the top choice in ${city}.
-      </p>
-
-      <div class="flex flex-col sm:flex-row gap-4 mt-10">
-        <a href="#contact" class="bg-white text-black px-7 py-4 rounded-full font-semibold text-center">${cta}</a>
-        <a href="#services" class="border border-white/10 bg-white/5 px-7 py-4 rounded-full font-semibold text-center hover:bg-white/10">View Services</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="services" class="relative z-10 px-6 md:px-12 py-24">
-    <div class="max-w-6xl mx-auto">
-      <div class="mb-12">
-        <p class="text-blue-300 text-sm mb-3">SERVICES</p>
-        <h2 class="text-4xl md:text-5xl font-semibold tracking-tighter">Built to convert attention into appointments.</h2>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-5">
-        ${serviceCards}
-      </div>
-    </div>
-  </section>
-
-  <section id="ai" class="relative z-10 px-6 md:px-12 py-24">
-    <div class="max-w-6xl mx-auto glass rounded-3xl p-8 md:p-12 grid md:grid-cols-2 gap-10 items-center">
-      <div>
-        <p class="text-violet-300 text-sm mb-3">AI-READY EXPERIENCE</p>
-        <h2 class="text-4xl font-semibold tracking-tighter">Turn your website into a 24/7 lead assistant.</h2>
-        <p class="text-zinc-400 mt-5 leading-relaxed">
-          Add an AI agent that answers questions, qualifies leads, books calls, and follows up with prospects automatically.
-        </p>
-      </div>
-
-      <div class="glass rounded-2xl p-6">
-        <div class="flex items-center gap-3 mb-5">
-          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-violet-500"></div>
-          <div>
-            <p class="font-semibold">AI Assistant</p>
-            <p class="text-xs text-zinc-500">Online now</p>
-          </div>
-        </div>
-        <div class="space-y-3 text-sm">
-          <p class="bg-white/10 rounded-2xl p-4">Hi, I can help you book an appointment or answer service questions.</p>
-          <p class="bg-blue-500/20 border border-blue-400/20 rounded-2xl p-4">What service are you interested in today?</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="contact" class="relative z-10 px-6 md:px-12 py-24">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl md:text-6xl font-semibold tracking-tighter">Ready to elevate ${business}?</h2>
-      <p class="text-zinc-400 mt-6 text-lg">
-        Serving ${city} with a premium digital experience designed to create trust and convert visitors.
-      </p>
-      <a href="mailto:info@example.com" class="inline-block mt-10 bg-white text-black px-8 py-4 rounded-full font-semibold">${cta}</a>
-    </div>
-  </section>
-
-  <footer class="relative z-10 border-t border-white/10 py-8 px-6 md:px-12 text-sm text-zinc-500 flex flex-col md:flex-row justify-between gap-3">
-    <p>© ${new Date().getFullYear()} ${business}. All rights reserved.</p>
-    <p>Website demo generated by SEAINT.</p>
-  </footer>
-
-</body>
-</html>`;
-
-  const preview = document.getElementById("preview");
-  preview.srcdoc = generatedHTML;
-  document.getElementById("status").innerText = "Demo generated successfully.";
+  } catch (error) {
+    status.innerText = error.message;
+  } finally {
+    btn.disabled = false;
+    btn.innerText = "Generate";
+  }
 }
 
 async function copyHTML(){
-  if(!generatedHTML) generateSite();
+  if(!generatedHTML){
+    document.getElementById("status").innerText = "Generate a website first.";
+    return;
+  }
+
   await navigator.clipboard.writeText(generatedHTML);
-  document.getElementById("status").innerText = "HTML copied to clipboard.";
+  document.getElementById("status").innerText = "HTML copied.";
 }
 
 function downloadHTML(){
-  if(!generatedHTML) generateSite();
+  if(!generatedHTML){
+    document.getElementById("status").innerText = "Generate a website first.";
+    return;
+  }
 
   const blob = new Blob([generatedHTML], { type:"text/html" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
+
   a.href = url;
   a.download = "index.html";
   a.click();
-  URL.revokeObjectURL(url);
 
+  URL.revokeObjectURL(url);
   document.getElementById("status").innerText = "index.html downloaded.";
 }
 
-generateSite();
+fillExample();
 </script>
-
 </body>
 </html>
