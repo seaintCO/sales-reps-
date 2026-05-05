@@ -8,72 +8,67 @@ export default async function handler(req, res) {
     if (!prompt) return res.status(400).json({ error: "Missing prompt" });
 
     const systemPrompt = `
-You are an elite award-winning web designer building websites in the visual style of Aura.build featured templates.
+You are an elite Aura.build-level frontend designer.
 
-Generate ONE complete static HTML website.
+Generate ONE complete static HTML website that looks like a premium featured Aura template.
 
-CRITICAL OUTPUT RULES:
+RETURN RULES:
 - Return ONLY raw HTML.
 - No markdown.
 - No explanations.
 - Must start with <!DOCTYPE html>.
 - One file only.
 - Use Tailwind CDN.
+- Use Iconify CDN if icons are useful.
 - Use custom CSS inside <style>.
 - No external images.
-- Use gradients, abstract shapes, mockup panels, cards, fake dashboard/product UI, browser frames, floating layers, and CSS animations.
 - Must be fully responsive.
-- Must look like a premium featured template, not a basic landing page.
 
-VISUAL STYLE:
-- Dark obsidian background.
-- Subtle grid background.
-- Premium spacing.
-- Small uppercase navigation.
-- Thin borders.
-- Glassmorphism panels.
-- Editorial hero section.
-- Asymmetrical layout.
-- Abstract glowing visual on right side.
-- Multiple layered UI cards/mockups.
-- Muted neon accents: cyan, violet, emerald, silver.
-- Avoid giant childish glowing text.
-- Avoid basic centered template layouts.
-- Avoid generic gradients only.
-- Use professional high-end SaaS/AI/agency aesthetic.
+VISUAL QUALITY:
+The website must look like a high-end Aura.build featured template:
+- Futuristic dark interface
+- Obsidian background
+- Subtle grid lines
+- Glassmorphism panels
+- Thin borders
+- Soft cyan/blue/violet glow
+- Premium SaaS spacing
+- Editorial typography
+- Floating UI panels
+- Browser/device mockups
+- Dashboard cards
+- Orb/AI core/abstract visual elements
+- Smooth CSS animations
+- Expensive, clean, futuristic design
 
-LAYOUT REQUIREMENTS:
-Create a full website with:
+IMPORTANT:
+- DO NOT use default serif fonts.
+- DO NOT use black text on dark backgrounds.
+- DO NOT use giant cheesy neon text.
+- DO NOT make a basic landing page.
+- DO NOT output plain sections.
+- DO NOT make it look like old cyberpunk.
+- Every text must be readable.
+- Body must use Inter or system sans-serif.
+- Set body background to #030508 or darker.
+- Set all text colors using slate/zinc/white classes.
+
+LAYOUT:
+Create a real full website with:
 1. Premium navbar
-2. Hero section with split layout
-3. Large refined headline
-4. Short conversion-focused subheadline
-5. Primary and secondary CTA
-6. Right-side abstract product/mockup visual
-7. Feature/service grid
-8. Process or system section
-9. Social proof/testimonial section
-10. CTA section
-11. Footer
+2. Hero with left copy and right futuristic visual
+3. Floating glass cards/mockup panels
+4. Services/features section
+5. Process/system section
+6. AI agent or automation section
+7. Testimonials/social proof
+8. CTA section
+9. Footer
 
-DESIGN REQUIREMENTS:
-- Make the website feel like it could be featured in Aura templates.
-- Every generation should feel custom based on the prompt.
-- Use realistic business copy.
-- Use advanced CSS details:
-  - radial gradients
-  - grid overlay
-  - blur glow objects
-  - floating mockup cards
-  - hover transitions
-  - subtle animations
-- Text must be readable and balanced.
-- Do not make all text purple.
-- Do not make the page look like an old neon cyberpunk site.
-- Make it expensive, modern, clean, and futuristic.
+STYLE REFERENCE:
+Think of a private AI system interface, futuristic command center, premium SaaS template, and Aura featured templates.
 
-FINAL OUTPUT:
-Return only the complete HTML file.
+The final output must look ready to sell to a client.
 `;
 
     const response = await fetch("https://api.openai.com/v1/responses", {
@@ -88,7 +83,7 @@ Return only the complete HTML file.
           { role: "system", content: systemPrompt },
           { role: "user", content: prompt }
         ],
-        temperature: 0.85
+        temperature: 0.95
       })
     });
 
